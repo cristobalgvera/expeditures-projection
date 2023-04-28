@@ -16,9 +16,11 @@ describe('EnvironmentService', () => {
 
   describe('get', () => {
     describe('when the environment variable is defined', () => {
-      const environment: Environment = {
-        MY_SECRET_VALUE: 'secret',
-        MY_SECRET_NUMBER: 12345,
+      const environment: Readonly<Environment> = {
+        SPREADSHEET_ID: 'spreadsheet_id',
+        MONTH_EXPENDITURES_SHEET_NAME: 'month_expenditures_sheet_name',
+        PROJECTION_EXPENDITURES_SHEET_NAME:
+          'projection_expenditures_sheet_name',
       };
 
       beforeEach(() => {

@@ -1,4 +1,5 @@
 export type Environment = {
-  MY_SECRET_VALUE: string;
-  MY_SECRET_NUMBER: number;
+  SPREADSHEET_ID: string;
+  MONTH_EXPENDITURES_SHEET_NAME: string;
+  PROJECTION_EXPENDITURES_SHEET_NAME: string;
 };

@@ -1,18 +1,18 @@
 import { EnvironmentService } from '@core/environment';
-import { ByeService } from '@features/bye';
-import { GreetingService } from '@features/greeting';
-import { HelloService } from '@features/hello';
+import { SheetService } from '@core/sheet';
+import { ExpendituresService } from '@features/expenditures/expenditures.service';
+import { ProjectionService } from '@features/projection/projection.service';
 
 // @ts-ignore
-function main(): void {
-  const byeService = new ByeService();
+function projectExpenditures(): void {
   const environmentService = new EnvironmentService();
-  const greetingService = new GreetingService(byeService, environmentService);
+  const sheetService = new SheetService(environmentService);
 
-  const hiMessage = HelloService.sayHi('CLASP');
-  const byeMessage = ByeService.sayBye('CLASP');
-  const greeting = greetingService.greet('CLASP');
-  const secretValue = greetingService.useSecretValue();
+  const expendituresService = new ExpendituresService(sheetService);
+  const projectionService = new ProjectionService(
+    sheetService,
+    expendituresService,
+  );
 
-  console.log({ hiMessage, byeMessage, greeting, secretValue });
+  projectionService.projectExpenditures();
 }
