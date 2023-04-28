@@ -5,41 +5,31 @@ export class SheetService {
 
   constructor(private readonly environmentService: EnvironmentService) {
     this.expendituresSpreadsheet = SpreadsheetApp.openById(
-      environmentService.get('SPREADSHEET_ID'),
+      this.environmentService.get('SPREADSHEET_ID'),
     );
   }
 
   getMonthExpendituresSheet() {
-    const sheet = this.expendituresSpreadsheet.getSheetByName(
+    return this.getSheetByName(
       this.environmentService.get('MONTH_EXPENDITURES_SHEET_NAME'),
     );
-
-    if (!sheet)
-      throw new Error(
-        `Sheet ${this.environmentService.get(
-          'MONTH_EXPENDITURES_SHEET_NAME',
-        )} not found`,
-      );
-
-    return sheet;
   }
 
   getProjectionExpendituresSheet() {
-    const sheet = this.expendituresSpreadsheet.getSheetByName(
+    return this.getSheetByName(
       this.environmentService.get('PROJECTION_EXPENDITURES_SHEET_NAME'),
     );
+  }
 
-    if (!sheet)
-      throw new Error(
-        `Sheet ${this.environmentService.get(
-          'PROJECTION_EXPENDITURES_SHEET_NAME',
-        )} not found`,
-      );
+  private getSheetByName(name: string) {
+    const sheet = this.expendituresSpreadsheet.getSheetByName(name);
+
+    if (!sheet) throw new Error(`Sheet ${name} not found`);
 
     return sheet;
   }
 
-  getHeadersPosition<T extends string>(
+  getHeadersPosition<const T extends string>(
     headers: unknown[],
     requiredHeaders: T[],
   ) {
@@ -49,10 +39,7 @@ export class SheetService {
       if (headerPosition === -1)
         throw new Error(`Header ${requiredHeader} not found`);
 
-      return {
-        ...positions,
-        [requiredHeader]: headerPosition,
-      };
+      return { ...positions, [requiredHeader]: headerPosition };
     }, {} as Record<T, number>);
   }
 }
