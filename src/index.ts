@@ -16,3 +16,14 @@ function projectExpenditures(): void {
 
   projectionService.projectExpenditures();
 }
+
+// @ts-ignore
+function onOpen(): void {
+  const ui = SpreadsheetApp.getUi();
+
+  const installmentsMenu = ui
+    .createMenu('Gastos en cuotas')
+    .addItem('Proyectar gastos en cuotas', 'projectExpenditures');
+
+  ui.createMenu('Proyección de gastos').addSubMenu(installmentsMenu).addToUi();
+}
